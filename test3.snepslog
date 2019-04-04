@@ -1,0 +1,14 @@
+set-mode-3
+define-frame g (nil prop grade)
+define-frame At (r a1 a2 a3)
+define-frame Disjoint (r a1 a2)
+define-frame Source(r a1 a2)
+define-frame Perceive (r a1)
+all(p) (Source(p,LL) => g(p, 11)).
+all(p) (Source(p,DP) => g(p, 4)).
+all(p) (Perceive(p) => g(p, 15)).
+g(all(l,t)(At(KC,l,t)=> At(SM,l,t)),10.5).
+all(l1,l2,x,t)((Disjoint(l1,l2) and At(x,l1,t)) => ~At(x,l2,t)).
+Perceive(Source(Source(At(SM,DT,12),LL),DP)).
+Perceive(At(KC,Office,12)).
+Disjoint(Office,DT).

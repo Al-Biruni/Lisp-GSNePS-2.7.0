@@ -1,0 +1,5 @@
+all(x)(Penguin(x)=>Bird(x)).
+all(x)(Bird(x)=>g(Flies(x),5)).
+all(x)(Penguin(x)=>g(~Flies(x),10)).
+Bird(Tweety)!
+Penguin(Opus)!

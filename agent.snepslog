@@ -1,0 +1,50 @@
+set-mode-3
+define-frame g (nil prop grade)
+define-frame duration (r a1 a2 a3)
+define-frame Holds (r a1 a2)
+define-frame temp (r a1)
+define-frame rh (r a1)
+define-frame spray (action object1)
+define-frame EventA (r a1 a2)
+define-frame EventB (r a1 a2)
+define-frame hours (r a1 a2)
+define-frame ck-dur (action object1 object2 object3)
+^^
+
+(define-primaction spray (object1)
+	(format t "~&~A" (sneps:choose.ns object1))
+	(jcall (jmethod "Main" "spray" "java.lang.String") 
+		(jclass "Main") 
+		(sneps:choose.ns object1) 
+    )
+)
+
+(define-primaction ck-dur (object1 object2 object3)
+	(setq t1 (prin1-to-string (sneps:node-to-lisp-object (first object1))))
+	(setq t2 (prin1-to-string (sneps:node-to-lisp-object (first object2))))
+	(setq d1 (parse-integer (subseq t1 8 (length t1))))
+	(setq d2 (parse-integer (subseq t2 8 (length t2))))
+	(setq dur(parse-integer (prin1-to-string (sneps:node-to-lisp-object (first object3)))))
+
+	(when (eq (- d2 d1) dur)
+		  (snepslog:tell (format nil "hours(~A,~A)!" t1 t2))
+	)
+)
+
+(attach-primaction spray spray ck-dur ck-dur)
+^^
+all(t)(andor(1,1){Holds(temp(low),t), Holds(temp(mod),t), Holds(temp(high),t)}).
+all(t)(andor(1,1){Holds(rh(low),t), Holds(rh(high),t)}).
+
+all(t)(duration(temp(low),6,t) => (duration(rh(high),6,t) => EventA(t,temp(low)))).
+all(t)(duration(temp(mod),8,t) => (duration(rh(high),8,t) => EventA(t,temp(mod)))).
+all(t)(duration(temp(high),10,t) => (duration(rh(high),10,t) => EventA(t,temp(high)))).
+
+all(t)(duration(temp(low),6,t) => (duration(rh(high),6,t)=> EventB(t,temp(low)))).
+all(t)(duration(temp(mod),8,t) => (duration(rh(high),8,t) => EventB(t,temp(mod)))).
+all(t)(duration(temp(high),10,t) => (duration(rh(high),10,t) => EventB(t,temp(high)))).
+
+
+all(x,t1)( EventA(t1,x) => (all(t2)(EventB(t2,x) => whendo(EventA(t1,x),ck-dur(t1,t2,2))))).
+
+all(t1,t2)(hours(t1,t2) =>(all(x) (EventA(t1,x) => whendo(EventB(t2,x), spray(t2))))).

@@ -1,0 +1,9 @@
+set-mode-3
+define-frame g (nil prop grade)
+define-frame At (r a1 a2 a3)
+define-frame Disjoint (r a1 a2)
+g(g(g(At(SM,DT,12),11),4),3).
+g(At(KC,Office,12),15).
+g(all(l,t)(At(KC,l,t)<=>At(SM,l,t)),10.5).
+all(l1,l2,x,t)((Disjoint(l1,l2) and At(x,l1,t)) => ~At(x,l2,t)).
+Disjoint(Office,DT).

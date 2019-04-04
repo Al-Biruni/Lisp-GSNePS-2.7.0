@@ -1,0 +1,5 @@
+set-mode-3
+define-frame g (nil prop grade)
+define-frame Bird (class member)
+Bird(Tweety)=>g(~Bird(Tweety),5).
+g(Bird(Tweety),5).

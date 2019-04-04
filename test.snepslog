@@ -1,0 +1,12 @@
+set-mode-3
+define-frame g (nil prop grade)
+define-frame Bird (class member)
+define-frame Flies (ability member)
+define-frame Penguin (class member)
+;all(x)(Bird(x)=>g(Flies(x),5)).
+g(all(x) (Bird(x) =>Flies(x)),5).
+all(x) (Penguin(x)=> Bird(x)).
+;all(x)(Penguin(x)=> g(~Flies(x),10)).
+g(all(x) (Penguin(x) => ~Flies(x)),10).
+Bird(Tweety).
+Penguin(Opus).

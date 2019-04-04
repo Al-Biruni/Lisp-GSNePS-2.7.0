@@ -1,0 +1,9 @@
+set-mode-3
+define-frame g (nil prop grade)
+define-frame Quacker (r a1)
+define-frame Pacifist (r a1)
+define-frame Republican (r a1)
+g(Quacker(Nixon), 6).
+g(Republican(Nixon),10).
+g(all(x)(Quacker(x) => Pacifist(x)),10)!
+g(all(x)(Republican(x) => ~Pacifist(x)),7)!
