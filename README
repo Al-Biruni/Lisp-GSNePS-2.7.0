@@ -1,1 +1,105 @@
 Installation instructions are located in the load-sneps.lisp file under the heading "Installation instructions". Search the file for "Installation instructions".
+
+
+ 
+
+# Background 
+
+# 1.SNePS 
+The semantic network processing system is a long term project for developing a   cognitive agent that is able to understand natural language and capable of common  sense reasoning to make the cognitive able to develop an action plan to solve problems in a wide variety of domains.Semantic networks generally are like a graphs  are made of nodes that represent concepts and arc that represent semantic relations between the concepts, and it is often used as a form of knowledge representation. In  SNePS nodes can be a cognitive entity a relation node or formula node 
+terms ,functions  or formulas over those terms. While arcs have directions and labels  the direction represent the inheritance direction of the relation while the label is the name of the relation between the two nodes.Also  SNePs has  three ways of inference  logic based, frame based, network based and the system uses all of them together to infer conclusions .
+Logic based inference works  by using SNePS logic to make formula-based inference implemented as a natural deduction system with introduction and elimination rules for the connectives and quantifiers.”SNePS formula-based inference is sound but not complete, as rules of inference that are less useful for natural language understanding and commonsense reasoning have not been implemented”.
+Frame  based inference “As a frame-based system, every SNePS functional term (including proposition-valued terms) is represented by a frame with slots and fillers. Each slot may be filled by an arbitrarily-sized set of other terms. However, cycles cannot be constructed.
+In slot-based inference, any proposition-valued frame is considered to imply the frame with any of its slots filled by a subset of its fillers. In the current implementation, this is not always sound.”
+Network based inference As a network-based system using graph theory Sneps "The Semantic Network Processing System" considers every term to be a node and every slot to be a directed  labeled arc from the frame-node it is in to every node in its filler 
+
+
+“A proposition-denoting term in a SNePS KB might or might not be "asserted", that is, treated as true in the KB. The SNePS logic is a paraconsistent version of relevance logic, so that a contradiction does not imply anything whatsoever. Nevertheless, SNeBR, the SNePS Belief Revision subsystem, will notice any explicit contradiction and engage the user in a dialogue to repair it. SNeBR is an Assumption-Based Truth Maintenance System (ATMS), and removes the assertion status of any proposition whose support has been removed.”
+
+
+
+ # 1.1 SNePS Logic
+  When trying to model natural language understanding (NLU) and common sense reasoning(CSR) FOPL fails to capture a lot of meaning SNeps logic address this problem by providing a logic more appropriate to mode NLU and CSR by having operators that mimic the understanding of a human  natural language processor . 
+
+
+Andor- andor(i,j){P1,..,Pn} to serve as a generalized nor    “exclusive or ”
+Thresh- thresh(i,j){P1,..,Pn} 
+Or-entailment {P1,P2,..,Pn} \/=> {Q1,Q2,..,Qn}
+And-entailment {P1,P2,..,Pn} &=> {Q1,Q2,..,Qn}
+Nexists “reasoning by the process of elimination ”
+
+
+1.2 SNePS Logic vs FOPL
+
+
+
+  
+   1.2 SNIP 
+
+
+
+
+
+
+   1.3 SNeBR 
+Belief revision systems are concerned with handling contradictions when they appear in the knowledge base and determining their source.
+SneBR is an assumption based belief revision system.Assumption based such that  the support of each proposition contains the hypotheses that produced it 
+
+
+
+
+
+
+
+
+2.LogAG
+
+LogAG ,unlike usual weighted logic which implies some non-classical notation of possible worlds , is a non-modal logic, with classical notation of the world [2]
+LogAG is a purely  algebraic language its purpose is to add certinity to each  information in the knowledge base in order to be able to reason mathematically about information and resolve contradictions when they appear  it does so  by defining filtering functions over the grade of the propositions.
+
+ 2.1 LogAG structure and functions 
+In LogAG there is a classical logical inference and on top of it is defined a more restrictive mathematical inference logic.
+LogAG language is a set of terms divided into three types prepositions,grades,and everything else.
+
+LogAG structure 𝑮 = {Đ,U,ℊ,<,e}
+Đ is the proposition and grade sets 
+U is the proposition set with the boolean algebra operators
+ℊ is the grading function it takes a preposition and a grade and return a graded preposition 
+< is comparison function between the grades which  gives rise to an irreflexive linear order on ℊ
+  e  is the equality function the identity relation 
+
+Then there is the valuation function V that assigns types to propositions and variables  And an interpretation function [[.]] that maps from syntax to semantics. 
+
+
+2.2 LogAG grading
+The set of logical consequences of a set ɼ of type proposition can be derived through the classical logical filter denoted by F([[ɼ]]).
+Then we apply our grading filter on top of the F([[ɼ]]) set .
+To understand how grading in LogAG works we first need to understand the structure of the graded propositions.
+	
+2.2.1 Embedding and Chains 
+To model that information from different sources have different credibility 
+For example “The lair told me that penguins fly’
+And to model the path of transmission of information through different source 
+For example “ The truth teller told me that the lair told him that an army is           coming to destroy the city“ to do so we will need to define a nesting structure for graded propositions
+
+Embedding 
+ A proposition p ∈ P is embedded in Q ⊆ P  if 
+ 1- p is in Q 
+Or 2 - there is a g ∈ G  g(p, g) is embedded in Q.
+
+
+Chains 
+“ A grading chain of p ∈ P is a finite sequence q0 , q1 , . . . , qni of
+grading propositions such that qn grades p and qi grades qi+1 , for 0 ≤ i < n.
+q0,q1, . . . , q n i is a grading chain if it is a grading chain of some p ∈ P.”[2]
+
+
+
+  2.2.2 Telescoping 
+Telescoping is the process of examining proposition at different embedding level and defining functions on the grade 
+
+Over embedded grades of the proposition
+Fused grade ⊗ operator is a function that consider propositions at different embedding  levels.
+
+ Over all grades of the proposition 
+Telescope fused grade ⊕ operator is a function that consider all grades of the same  proposition. 
